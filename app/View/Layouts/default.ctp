@@ -53,14 +53,16 @@
 				</ul>
 	          </div><!--/.nav-collapse -->
 			  <?php } else { ?>
-			  <ul class="nav pull-right">
-				  <li class="dropdown"><?php echo $this->Html->link($username, '#menu', array('class' => 'dropdown-toggle', 'id' => 'dLabel', 'data-toggle' => 'dropdown', 'role' => 'button')); ?>
-					<ul class="dropdown-menu pull-right" role="menu">
-						<li><?php echo $this->Html->link('Profile', '/users/view'); ?></li>
-						<li><?php echo $this->Html->link('Logout', '/users/logout'); ?></li>
-					</ul>
-				  </li>  
-			  </div> <!--/.dropdown -->
+			  <div class="nav-collapse">
+				<ul class="nav pull-right">
+					<li class="dropdown"><?php echo $this->Html->link($username, '#menu', array('class' => 'dropdown-toggle', 'id' => 'dLabel', 'data-toggle' => 'dropdown', 'role' => 'button')); ?>
+					  <ul class="dropdown-menu pull-right" role="menu">
+						  <li><?php echo $this->Html->link('Profile', '/users/view'); ?></li>
+						  <li><?php echo $this->Html->link('Logout', '/users/logout'); ?></li>
+					  </ul>
+					</li>
+				</ul>
+			  </div> <!--/.nav-collapse -->
 			  <?php } ?>
 	        </div>
 	      </div>

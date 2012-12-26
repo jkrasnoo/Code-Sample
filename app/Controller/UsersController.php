@@ -12,6 +12,10 @@ class UsersController extends AppController
  */
 	public $components = array('RequestHandler');
 	
+/**
+ * Helpers
+ */
+	//public $helpers = array('Html');
 	
 /**
  * beforeFilter
@@ -24,6 +28,15 @@ class UsersController extends AppController
 		
 		// Make sure we go to profile after login
 		$this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'view');
+		
+		/*
+		if ($this->request->is('ajax')) {
+			$this->RequestHandler->setContent('json');
+			$this->autoRender = false;
+			$this->layout = 'ajax';
+		}
+		 * 
+		 */
 	}
 	
 /**
@@ -44,17 +57,32 @@ class UsersController extends AppController
  * @return void
  */
 	public function view($id = null) {
+		$this->set('title_for_layout', 'User Profile');
 		if ($id === null) {
 			$id = $this->Auth->user('id');
 		}
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'), 'default', array('class' => 'alert alert-error'));
+			$this->redirect('/users/login');
+			//throw new NotFoundException(__('Invalid user'), 'default', array('class' => 'alert alert-error'));
 		}
-		$this->set('user', $this->User->read(null, $id));
-		$this->request->data = $this->User->read(null, $id);
+		
+		// only read the fields listed below.
+		$user = $this->User->read(array(
+			'username',
+			'email',
+			'first_name',
+			'last_name',
+			'address',
+			'city',
+			'state',
+			'zip'
+		), $id);
+		
+		$this->set('user', $user);
+		$this->request->data = $user;
 	}
-
+	
 /**
  * add method
  *
@@ -62,10 +90,14 @@ class UsersController extends AppController
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			
+			// Must always create a new user before we save a new user.
 			$this->User->create();
+			
+			// If the new user has been created redirect to login.
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved'), 'default', array('class' => 'alert alert-success'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'login'));
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-error'));
 			}
@@ -91,6 +123,7 @@ class UsersController extends AppController
 			
 			
 			if ($this->User->save($this->request->data, false)) {
+				// Response is built in to javascript.
 				//$this->Session->setFlash(__('The user has been saved'), 'default', array('class' => 'alert alert-success'));
 				//$this->redirect(array('action' => 'view'));
 			} else {
@@ -114,16 +147,21 @@ class UsersController extends AppController
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
+		
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'),  'default', array('class' => 'alert alert-error'));
+			return new CakeResponse(array('body' => json_encode(array('success' => false))));
+			//throw new NotFoundException(__('Invalid user'),  'default', array('class' => 'alert alert-error'));
 		}
 		if ($this->User->delete()) {
-			$this->Session->setFlash(__('User deleted'), 'default', array('class' => 'alert alert-success'));
-			$this->redirect(array('action' => 'index'));
+			//$this->Session->setFlash(__('User deleted'), 'default', array('class' => 'alert alert-success'));
+			//$this->redirect(array('action' => 'index'));
+			return new CakeResponse(array('body' => json_encode(array('success' => true))));
+			
 		}
-		$this->Session->setFlash(__('User was not deleted'), 'default', array('class' => 'alert alert-error'));
-		$this->redirect(array('action' => 'index'));
+		//$this->Session->setFlash(__('User was not deleted'), 'default', array('class' => 'alert alert-error'));
+		//$this->redirect(array('action' => 'index'));
+		return new CakeResponse(array('body' => json_encode(array('success' => false))));
 	}
 	
 /**

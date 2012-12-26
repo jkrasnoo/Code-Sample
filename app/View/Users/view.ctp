@@ -3,10 +3,21 @@
 	
 -->
 <?php
+	// jQuery script for editable in place.
+	// http://www.tectual.com.au/posts/7/jQuery-Editable-Plugin-Best-In-Place-Editor-.html
+	$this->Html->script(
+			array(
+				'jquery/plugin/jquery.editable-1.0.1',
+				'view'
+			),
+			array( 'inline' => false )
+	);
+		
+	
 	// Init the place vars.
 
 	$first_name = (!empty($user['User']['first_name'])) ? $user['User']['first_name'] : 'Enter First Name';
-	$last_name = (!empty($user['User']['lastt_name'])) ? $user['User']['last_name'] : 'Enter Last Name';
+	$last_name = (!empty($user['User']['last_name'])) ? $user['User']['last_name'] : 'Enter Last Name';
 	$email = (!empty($user['User']['email'])) ? $user['User']['email'] : 'Enter Email';
 	$password = 'Enter New Password';
 	$address = (!empty($user['User']['address'])) ? $user['User']['address'] : 'Enter An Address';
@@ -30,9 +41,9 @@
 			'format' => array('before', 'label', 'between', 'input', 'after'),
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label', 'style' => 'font-weight: bold;'),
-			'class' => 'fnInput',
+			'class' => 'emailInput',
 			'style' => 'display: none;',
-			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".fnInput\" style=\"font-style: italic;\">{$email}</span>",
+			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".emailInput\" style=\"font-style: italic;\">{$email}</span>",
 			'after' => '</div>',
 			'error' => false
 		));
@@ -54,9 +65,9 @@
 			'format' => array('before', 'label', 'between', 'input', 'after'),
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label', 'style' => 'font-weight: bold;'),
-			'class' => 'fnInput',
+			'class' => 'lnInput',
 			'style' => 'display: none;',
-			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".fnInput\" style=\"font-style: italic;\">{$last_name}</span>",
+			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".lnInput\" style=\"font-style: italic;\">{$last_name}</span>",
 			'after' => '</div>',
 			'error' => false
 		));
@@ -66,9 +77,9 @@
 			'format' => array('before', 'label', 'between', 'input', 'after'),
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label', 'style' => 'font-weight: bold;'),
-			'class' => 'fnInput',
+			'class' => 'psInput',
 			'style' => 'display: none;',
-			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".fnInput\" style=\"font-style: italic;\">{$password}</span>",
+			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".psInput\" style=\"font-style: italic;\">{$password}</span>",
 			'after' => '</div>',
 			'error' => false
 		));
@@ -78,9 +89,9 @@
 			'format' => array('before', 'label', 'between', 'input', 'after'),
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label', 'style' => 'font-weight: bold;'),
-			'class' => 'fnInput',
+			'class' => 'adInput',
 			'style' => 'display: none;',
-			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".fnInput\" style=\"font-style: italic;\">{$address}</span>",
+			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".adInput\" style=\"font-style: italic;\">{$address}</span>",
 			'after' => '</div>',
 			'error' => false
 		));
@@ -90,9 +101,9 @@
 			'format' => array('before', 'label', 'between', 'input', 'after'),
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label', 'style' => 'font-weight: bold;'),
-			'class' => 'fnInput',
+			'class' => 'ctInput',
 			'style' => 'display: none;',
-			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".fnInput\" style=\"font-style: italic;\">{$city}</span>",
+			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".ctInput\" style=\"font-style: italic;\">{$city}</span>",
 			'after' => '</div>',
 			'error' => false
 		));
@@ -102,9 +113,9 @@
 			'format' => array('before', 'label', 'between', 'input', 'after'),
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label', 'style' => 'font-weight: bold;'),
-			'class' => 'fnInput',
+			'class' => 'stInput',
 			'style' => 'display: none;',
-			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".fnInput\" style=\"font-style: italic;\">{$state}</span>",
+			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".stInput\" style=\"font-style: italic;\">{$state}</span>",
 			'after' => '</div>',
 			'error' => false
 		));
@@ -114,9 +125,9 @@
 			'format' => array('before', 'label', 'between', 'input', 'after'),
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label', 'style' => 'font-weight: bold;'),
-			'class' => 'fnInput',
+			'class' => 'zipInput',
 			'style' => 'display: none;',
-			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".fnInput\" style=\"font-style: italic;\">{$zip}</span>",
+			'between' => "<div class=\"controls\">\n<span data-type=\"editable\" data-for=\".zipInput\" style=\"font-style: italic;\">{$zip}</span>",
 			'after' => '</div>',
 			'error' => false
 		));
@@ -124,27 +135,11 @@
 	<?php echo $this->Form->end(); ?>
 </div>
 
-
-<!--
-	jQuery script for editable in place.
-	http://www.tectual.com.au/posts/7/jQuery-Editable-Plugin-Best-In-Place-Editor-.html
--->
-<?php echo $this->Html->script('jquery/plugin/jquery.editable-1.0.1'); ?>
-<script>
-	$("#view-container").editables({
-		beforeFreeze : function (display) {
-			display.text(this.val());
-		},
-		onFreeze : function () {
-			// function is bound to element
-			var element = $(this),
-			    data = {};
-				
-			data[element.attr('name')] = element.val();
-			$.post('/users/edit', data,
-			function(data, status){
-				
-			}, 'json');
-		}
-	});
-</script>
+<div class="container">
+	<?php 
+		echo $this->Form->create(array('default' => false));
+		echo $this->Form->input('id', array('type' => 'hidden', 'value' => $user['User']['id']));
+		echo $this->Form->submit('Delete Profile', array('id' => 'delete'));
+		echo $this->Form->end();
+	?>
+</div>
